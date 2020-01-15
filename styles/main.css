@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Prata&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  border:0;
+  }
+
+.heading{
+  font-family: 'Prata', serif;
+  justify-self: left;
+  font-size: 30px;
+  color: lightgrey;
+}
+
+.main{
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+video{
+  position: absolute;
+  top: 10vh;
+  height: 80vh;
+  width: 100vw;
+}
+
+.leaves{
+  filter: grayscale(0%) opacity(80%) brightness(100%);
+  z-index: 0;
+}
+
+.water{
+  filter: grayscale(100%) opacity(60%) brightness(100%);
+  z-index: 1;
+}
+
+.clouds{
+  filter: opacity(33%) brightness(100%);
+  z-index: 3;
+}
