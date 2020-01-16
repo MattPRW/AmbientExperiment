@@ -5,10 +5,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const bellArp = new Audio('assets/BellArp.mp3')
   const atmos = new Audio('assets/atmos.mp3')
 
+  const controls = document.querySelector('.controls')
+  const keys = []
+  const keyAssign = ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+
   let synthPlay = false
   let stringPlay = false
   let bellPlay = false
   let atmosPlay = false
+
+  function addKeys() {
+    for (let i = 0; i < 7; i++) {
+      const key = document.createElement('DIV')
+      controls.appendChild(key)
+      keys.push(key)
+    }
+  }
+
+  function assignKeys() {
+    keys.forEach((element, index) => {
+      element.classList.add(keyAssign[index])
+      document.querySelector(`.${keyAssign[index]}`).innerHTML = `<text>${keyAssign[index]}</text>`
+    })
+  }
+
+  addKeys()
+  assignKeys()
 
   //-------------------------
   //-- Synth loop handlers --
@@ -163,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   
-
   document.addEventListener('keyup', (e) => {
     //playing and pausing the 4 loops
     if (e.keyCode === 90 && !synthPlay) {
@@ -193,11 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (e.keyCode === 86 && atmosPlay){
       atmosStopHandler(atmos)
       atmosPlay = !atmosPlay
-    }
-    //modifying the loops
-    if (e.keyCode === 65 && !synthMod) {
-      synthModHandler() 
-      synthMod = !synthMod
     }
   })
 })
