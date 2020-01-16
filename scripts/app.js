@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const stringDrone = new Audio('assets/StringDrone.mp3')
   const bellArp = new Audio('assets/BellArp.mp3')
   const atmos = new Audio('assets/atmos.mp3')
+  // const synthHit = new Audio('assets/SynthHit.mp3')
+
 
   const controls = document.querySelector('.controls')
   const keys = []
-  const keyAssign = ['Z', 'X', 'C', 'V']
+  const keyAssign = ['Z', 'X', 'C', 'V', 'B']
 
   let synthPlay = false
   let stringPlay = false
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let atmosPlay = false
 
   function addKeys() {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       const key = document.createElement('DIV')
       controls.appendChild(key)
       keys.push(key)
@@ -184,6 +186,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 25)
   }
 
+  //----------------
+  // Hit Handlers
+  //----------------
+
+  let delayTime = 175
+
+  function hitPlayHandler(){
+    let hitVolume = 0.8
+    const hitInt = setInterval(function(){
+      const synthHit = new Audio('assets/SynthHit.mp3')
+      synthHit.volume = hitVolume
+      synthHit.play()
+      hitVolume -= 0.05
+      if (hitVolume < 0.0) {
+        clearInterval(hitInt)
+      }
+    }, delayTime)
+  }
+
+  //delay time
+  function delayTimeHandler(direction){
+    if (direction === 'up' && delayTime < 2000){
+      delayTime += 50
+      console.log(delayTime)
+    } 
+    if (direction === 'down' && delayTime > 50){
+      delayTime -= 50
+      console.log(delayTime)
+    } 
+  }
+
+
+  //--------------------------
+  // button styling handlers
+  //--------------------------
+
   function buttonOn(key){
     document.querySelector(`div.${key}`).classList.add('button-on')
     document.querySelector(`div.${key} .button-text`).classList.add('button-on')
@@ -232,6 +270,15 @@ document.addEventListener('DOMContentLoaded', () => {
       atmosStopHandler()
       buttonOff('V')
       atmosPlay = !atmosPlay
+    }
+    if (e.keyCode === 66) {
+      hitPlayHandler() 
+    }
+    if (e.keyCode === 188) {
+      delayTimeHandler('up')
+    }
+    if (e.keyCode === 190) {
+      delayTimeHandler('down')
     }
   })
 })
