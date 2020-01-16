@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const controls = document.querySelector('.controls')
   const keys = []
-  const keyAssign = ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+  const keyAssign = ['Z', 'X', 'C', 'V']
 
   let synthPlay = false
   let stringPlay = false
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let atmosPlay = false
 
   function addKeys() {
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 4; i++) {
       const key = document.createElement('DIV')
       controls.appendChild(key)
       keys.push(key)
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function assignKeys() {
     keys.forEach((element, index) => {
       element.classList.add(keyAssign[index])
-      document.querySelector(`.${keyAssign[index]}`).innerHTML = `<text>${keyAssign[index]}</text>`
+      document.querySelector(`.${keyAssign[index]}`).innerHTML = `<text class='button-text'>${keyAssign[index]}</text>`
     })
   }
 
@@ -184,35 +184,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 25)
   }
 
-  
+  function buttonOn(key){
+    document.querySelector(`div.${key}`).classList.add('button-on')
+    document.querySelector(`div.${key} .button-text`).classList.add('button-on')
+  }
+
+  function buttonOff(key){
+    document.querySelector(`div.${key}`).classList.remove('button-on')
+    document.querySelector(`div.${key} .button-text`).classList.remove('button-on')
+  }
+
+
   document.addEventListener('keyup', (e) => {
     //playing and pausing the 4 loops
     if (e.keyCode === 90 && !synthPlay) {
       synthPlayHandler() 
+      buttonOn('Z')
       synthPlay = !synthPlay
     } else if (e.keyCode === 90 && synthPlay){
       synthStopHandler()
+      buttonOff('Z')
       synthPlay = !synthPlay
     }
     if (e.keyCode === 88 && !stringPlay) {
-      stringPlayHandler(stringDrone) 
+      stringPlayHandler()
+      buttonOn('X')
       stringPlay = !stringPlay
     } else if (e.keyCode === 88 && stringPlay){
-      stringStopHandler(stringDrone)
+      stringStopHandler()
+      buttonOff('X')
       stringPlay = !stringPlay
     }
     if (e.keyCode === 67 && !bellPlay) {
-      bellPlayHandler(bellArp) 
+      bellPlayHandler() 
+      buttonOn('C')
       bellPlay = !bellPlay
     } else if (e.keyCode === 67 && bellPlay){
-      bellStopHandler(bellArp)
+      bellStopHandler()
+      buttonOff('C')
       bellPlay = !bellPlay
     }
     if (e.keyCode === 86 && !atmosPlay) {
-      atmosPlayHandler(atmos) 
+      atmosPlayHandler() 
+      buttonOn('V')
       atmosPlay = !atmosPlay
     } else if (e.keyCode === 86 && atmosPlay){
-      atmosStopHandler(atmos)
+      atmosStopHandler()
+      buttonOff('V')
       atmosPlay = !atmosPlay
     }
   })

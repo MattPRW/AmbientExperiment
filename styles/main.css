@@ -67,9 +67,6 @@ video{
 .controls{
     align-items: center;
     display: flex;
-    flex-grow: 1;
-    flex-wrap: wrap;
-    height: 100%;
     justify-content: left;
     width: 80vw;
 }
@@ -85,7 +82,16 @@ video{
   width: 50px;
 }
 
-text{
+.button-on{
+  background-color:lightgray;
+  color:white;
+}
+
+.button-text{
   font-size: 40px;
   color: lightgray;
+}
+
+.button-text.button-on{
+  color: white;
 }
