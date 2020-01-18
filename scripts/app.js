@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const stringDrone = new Audio('assets/StringDrone.mp3')
   const bellArp = new Audio('assets/BellArp.mp3')
   const atmos = new Audio('assets/atmos.mp3')
+
+  const bar = document.querySelector('.delay-filler')
   // const synthHit = new Audio('assets/SynthHit.mp3')
 
 
-  const controls = document.querySelector('.controls')
+  const controls = document.querySelector('.control-buttons')
   const keys = []
   const keyAssign = ['Z', 'X', 'C', 'V', 'B']
 
@@ -33,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   addKeys()
   assignKeys()
+  
 
   //-------------------------
   //-- Synth loop handlers --
@@ -190,30 +193,34 @@ document.addEventListener('DOMContentLoaded', () => {
   // Hit Handlers
   //----------------
 
-  let delayTime = 175
+  let delayTime = 1000
 
-  function hitPlayHandler(){
-    let hitVolume = 0.8
+  function hitPlayHandler(soundFile){
+    let hitVolume = 0.7
+    const synthHit = new Audio(soundFile)
+    synthHit.play()
     const hitInt = setInterval(function(){
-      const synthHit = new Audio('assets/SynthHit.mp3')
+      const synthHit = new Audio(soundFile)
       synthHit.volume = hitVolume
       synthHit.play()
-      hitVolume -= 0.05
+      hitVolume -= 0.10
       if (hitVolume < 0.0) {
         clearInterval(hitInt)
       }
     }, delayTime)
   }
 
+
   //delay time
   function delayTimeHandler(direction){
+    
     if (direction === 'up' && delayTime < 2000){
       delayTime += 50
-      console.log(delayTime)
+      bar.style.width = ((delayTime / 2000) * 100) + '%'
     } 
-    if (direction === 'down' && delayTime > 50){
+    if (direction === 'down' && delayTime > 0){
       delayTime -= 50
-      console.log(delayTime)
+      bar.style.width = ((delayTime / 2000) * 100) + '%'
     } 
   }
 
@@ -272,12 +279,15 @@ document.addEventListener('DOMContentLoaded', () => {
       atmosPlay = !atmosPlay
     }
     if (e.keyCode === 66) {
-      hitPlayHandler() 
+      hitPlayHandler('assets/SynthHit.mp3') 
     }
-    if (e.keyCode === 188) {
-      delayTimeHandler('up')
+    if (e.keyCode === 78) {
+      hitPlayHandler('assets/NoiseHit.mp3') 
     }
     if (e.keyCode === 190) {
+      delayTimeHandler('up')
+    }
+    if (e.keyCode === 188) {
       delayTimeHandler('down')
     }
   })
